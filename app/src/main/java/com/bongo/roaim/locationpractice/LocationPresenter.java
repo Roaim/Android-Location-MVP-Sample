@@ -102,6 +102,16 @@ public class LocationPresenter implements Contract.Presenter, Contract.Interacto
 
     @Override
     public void onLocationSettingsSuccess() {
-        getLastKnownLocation();
+        new Awaiter(){
+            @Override
+            protected long getWaitInterval() {
+                return 1000;
+            }
+
+            @Override
+            protected void onFinished() {
+                getLastKnownLocation();
+            }
+        }.start();
     }
 }
